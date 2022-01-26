@@ -2,7 +2,14 @@ import 'package:firstapp/utilis/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String name="";
+  bool changeButton=false;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -15,9 +22,9 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 20.0,
             ),
-            const Text(
-              "Welcome",
-              style: TextStyle(
+            Text(
+              "Welcome $name !!",
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold
               ),
@@ -34,6 +41,10 @@ class LoginPage extends StatelessWidget {
                         hintText: "Enter Username",
                         labelText: "Username"
                     ),
+                    onChanged: (value){
+                      name=value;
+                      setState(() { }); //calling stateful function
+                    },
                   ),
                   TextFormField(
                     obscureText: true,
@@ -46,13 +57,42 @@ class LoginPage extends StatelessWidget {
                     height: 20.0,
                   ),
 
-                  ElevatedButton(
-                      child: const Text("LOGIN"),
-                  style: TextButton.styleFrom(minimumSize: const Size(100,40)),
-                    onPressed:(){
-                      Navigator.pushNamed(context, MyRoutes.homeroute);
-                    },
-                    )
+                 InkWell(                            //we will make it animated container
+                   onTap: ()async{
+                     setState(() {
+                       changeButton=true;
+                     });
+                     await Future.delayed(const Duration(seconds: 1));
+                     Navigator.pushNamed(context, MyRoutes.homeroute);
+                   },
+                   child: AnimatedContainer(
+                         duration: Duration(seconds: 1),                      //designing a button using a container, as
+                                                              // container cannot be pressed we will wrap it up with inkwell widget
+                     width: changeButton ? 60 : 130,
+                     height: 50,
+                     alignment: Alignment.center,
+                     child: const Text(
+                         "LOGIN",
+                     style: TextStyle(
+                       color: Colors.white,
+                       fontWeight: FontWeight.bold,
+                       fontSize: 15
+                     ),
+                     ),
+                     decoration: BoxDecoration(
+                       color: Colors.deepPurple,
+                       borderRadius: BorderRadius.circular(changeButton ? 50 :8)
+                     ),
+                   ),
+                 ),
+
+                 // ElevatedButton(
+                   //   child: const Text("LOGIN"),
+                 // style: TextButton.styleFrom(minimumSize: const Size(100,40)),
+                   // onPressed:(){
+                     // Navigator.pushNamed(context, MyRoutes.homeroute);
+                    //},
+                   // )
                 ],
               ),
             )
