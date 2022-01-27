@@ -10,10 +10,10 @@ class HomePage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text("Welcome to $days days of flutter",style: TextStyle(
+          child: Text("Welcome to $days days of flutter",
+            style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.indigoAccent
           ),
           ),
         ),
